@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Param, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  ParseIntPipe,
+  Body,
+} from '@nestjs/common';
 import { WeekService } from './weeks.service';
 
 @Controller('weeks')
@@ -18,7 +25,7 @@ export class WeekController {
   }
 
   @Get(':id')
-  async getWeekById(@Param('id') id: number) {
+  async getWeekById(@Param('id', ParseIntPipe) id: number) {
     return this.weekService.getWeekById(id);
   }
 }

@@ -17,12 +17,16 @@ export class StudyService {
   }
 
   async checkPracticeAnswer(wordId: number, answer: string): Promise<boolean> {
-    const word = await this.prisma.word.findUnique({ where: { id: wordId } });
+    const word = await this.prisma.word.findUnique({
+      where: { id: wordId },
+    });
 
     if (!word) {
       throw new Error('Word not found');
     }
+
     const correct = word.portuguese.toLowerCase() === answer.toLowerCase();
+
     await this.prisma.word.update({
       where: { id: wordId },
       data: {

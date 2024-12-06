@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Body,
+} from '@nestjs/common';
 import { StudyService } from './study.service';
 
 @Controller('study')
@@ -11,10 +18,10 @@ export class StudyController {
 
   @Post('practice/answer/:wordId')
   async checkPracticeAnswer(
-    @Param('wordId') wordId: number,
-    @Body('answer') answer: string,
+    @Param('wordId', ParseIntPipe) wordId: number, // Converte o wordId para número
+    @Body('answer') answer: string, // Captura o campo "answer" do corpo da requisição
   ) {
-    return await this.studyService.checkPracticeAnswer(wordId, answer);
+    return this.studyService.checkPracticeAnswer(wordId, answer);
   }
 
   @Get('praticar/word')
@@ -24,7 +31,7 @@ export class StudyController {
 
   @Post('praticar/answer/:wordId')
   async checkPraticarAnswer(
-    @Param('wordId') wordId: number,
+    @Param('wordId', ParseIntPipe) wordId: number,
     @Body('answer') answer: string,
   ) {
     return await this.studyService.checkPraticarAnswer(wordId, answer);

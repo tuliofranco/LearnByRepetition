@@ -21,8 +21,8 @@ model Word {
   id           Int       @id @default(autoincrement())
   english      String
   portuguese   String
-  weekId       Int
-  week         Week      @relation(fields: [weekId], references: [id])
+  weekId       Int?
+  week         Week?      @relation(fields: [weekId], references: [id])
   createdAt    DateTime  @default(now())
   correctCount Int       @default(0)
   wrongCount   Int       @default(0)
