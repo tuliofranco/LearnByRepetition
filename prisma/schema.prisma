@@ -1,0 +1,29 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Week {
+  id        Int      @id @default(autoincrement())
+  title     String
+  createdAt DateTime @default(now())
+  startDate DateTime
+  endDate   DateTime?
+
+  words     Word[]
+}
+
+model Word {
+  id           Int       @id @default(autoincrement())
+  english      String
+  portuguese   String
+  weekId       Int
+  week         Week      @relation(fields: [weekId], references: [id])
+  createdAt    DateTime  @default(now())
+  correctCount Int       @default(0)
+  wrongCount   Int       @default(0)
+}
