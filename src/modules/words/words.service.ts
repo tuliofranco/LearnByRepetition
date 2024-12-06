@@ -5,14 +5,15 @@ import { PrismaService } from '../prisma/prisma.service';
 export class WordsService {
   constructor(private prisma: PrismaService) {}
 
-  async getNewWordsForUser(
-    limit: number,
-  ): Promise<{ id: number; english: string; portuguese: string }[]> {
+  async getAllWords() {
+    const words = await this.prisma.word.findMany();
+
+    return words;
+  }
+
+  async getWordsByWeek(weekId: number) {
     return await this.prisma.word.findMany({
-      where: {
-        weekId: null,
-      },
-      take: limit,
+      where: { weekId },
       orderBy: { createdAt: 'asc' },
     });
   }
